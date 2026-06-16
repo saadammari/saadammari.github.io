@@ -1,81 +1,389 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title>CS 474/574 Machine Learning HW1</title>
-  <style type="text/css">
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saad Ammari</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0d1117;
+      --surface: #161b22;
+      --border:  #30363d;
+      --text:    #e6edf3;
+      --muted:   #8b949e;
+      --accent:  #58a6ff;
+      --green:   #3fb950;
+      --radius:  8px;
+      --max-w:   780px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .wrapper {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 3rem 0; border-top: 1px solid var(--border); }
+
+    /* ── Hero ── */
+    header {
+      padding: 5rem 0 3rem;
+    }
+
+    .hero-name {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .hero-title {
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .hero-meta a { color: var(--muted); }
+    .hero-meta a:hover { color: var(--accent); text-decoration: none; }
+
+    .hero-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+      font-size: 0.875rem;
+    }
+
+    nav a { color: var(--muted); }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Section headings ── */
+    h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── About ── */
+    #about p { max-width: 62ch; color: var(--text); }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; gap: 2rem; }
+
+    .exp-item {}
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .exp-role { font-weight: 600; font-size: 0.95rem; }
+    .exp-company { color: var(--accent); }
+    .exp-date { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+    .exp-bullets {
+      margin-top: 0.6rem;
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .exp-bullets li { font-size: 0.875rem; color: var(--muted); }
+    .exp-bullets li strong { color: var(--text); font-weight: 500; }
+
+    /* ── Skills ── */
+    .skill-group { margin-bottom: 1rem; }
+    .skill-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2em;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: border-color 0.15s;
+    }
+
+    .card:hover { border-color: var(--accent); }
+
+    .card-title { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+
+    .card-desc { font-size: 0.85rem; color: var(--muted); flex: 1; }
+
+    .card-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .stack-tag {
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(88,166,255,0.08);
+      border: 1px solid rgba(88,166,255,0.2);
+      border-radius: 3px;
+      padding: 0.15rem 0.5rem;
+    }
+
+    /* ── Education ── */
+    .edu-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .edu-item {}
+    .edu-degree { font-weight: 600; font-size: 0.95rem; }
+    .edu-school { font-size: 0.875rem; color: var(--muted); }
+    .edu-date   { font-size: 0.8rem;  color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── Contact ── */
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-list li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+    .contact-label { color: var(--muted); min-width: 3.5rem; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 3.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 500px) {
+      .hero-name { font-size: 1.9rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .exp-date { width: 100%; }
+    }
   </style>
-  <link rel="stylesheet" type="text/css" media="screen, projection, print"
-    href="slideous/slideous.css" />
-  
-  <script src="slideous/slideous.js"
-    charset="utf-8" type="text/javascript"></script>
 </head>
 <body>
-<div id="statusbar">
-<span style="float:right;">
-<span style="margin-right:4em;font-weight:bold;"><span id="slideidx"></span> of {$slidecount}</span>
-<button id="homebutton" title="first slide">1</button>
-<button id="prevslidebutton" title="previous slide">&laquo;</button>
-<button id="previtembutton" title="previous item">&lsaquo;</button>
-<button id="nextitembutton" title="next item">&rsaquo;</button>
-<button id="nextslidebutton" title="next slide">&raquo;</button>
-<button id="endbutton" title="last slide">{$slidecount}</button>
-<button id="incfontbutton" title="content">A+</button>
-<button id="decfontbutton" title="first slide">A-</button>
-<select id="tocbox" size="1"><option></option></select>
-</span>
-<span id="eos">&frac12;</span>
-<span title="{$location}, {$date}">{$title}, {$author}</span>
+
+<div class="wrapper">
+
+  <header>
+    <div class="hero-name">Saad Ammari</div>
+    <div class="hero-title">Lead Software Developer &amp; MS Computer Science</div>
+    <div class="hero-meta">
+      <span><span class="dot"></span> Woodbury, Minnesota</span>
+      <span><a href="mailto:saadburhanammari@gmail.com">saadburhanammari@gmail.com</a></span>
+      <span><a href="tel:5157153656">515-715-3656</a></span>
+      <span><a href="https://github.com/saadammari" target="_blank">github.com/saadammari</a></span>
+    </div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      Full-stack software engineer with an MS in Computer Science from Iowa State University.
+      I build web applications end-to-end — from REST APIs and database design to responsive
+      frontends — and have a background in machine learning and static analysis research.
+      Currently based in Woodbury, Minnesota.
+    </p>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-role">Lead Software Developer &mdash; <span class="exp-company">ACCC</span></div>
+          <div class="exp-date">Nov 2024 – May 2026</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Architected and deployed a <strong>full-stack web app</strong> with Next.js and Django to replace a legacy system.</li>
+          <li>Built responsive React/MUI components, improving page load speeds by <strong>over 50%</strong>.</li>
+          <li>Implemented <strong>JWT-based auth</strong> with Django REST Framework supporting three role-based access tiers.</li>
+          <li>Designed RESTful API endpoints and integrated PostgreSQL stored procedures for core business logic.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-role">Software Engineer &mdash; <span class="exp-company">SoilSerdem</span></div>
+          <div class="exp-date">Jan 2024 – Aug 2024</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Extended a TypeScript API to support <strong>10+ file formats</strong> (PDF, PNG, TIFF, etc.).</li>
+          <li>Built file parsing and pre-processing pipelines for image correction and format conversion.</li>
+          <li>Designed a custom <strong>OCR solution in Python</strong> to extract structured data from scanned documents.</li>
+          <li>Created data visualization dashboards that improved customer insights and feature adoption.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-role">Research Assistant &mdash; <span class="exp-company">ISU Program Analysis &amp; AI Lab</span></div>
+          <div class="exp-date">Jan 2023 – Dec 2023</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Contributed research to reduce false-positive rates in static analysis for the lab's <strong>Hydrogen</strong> tool.</li>
+          <li>Conducted vulnerability analysis using GCC, Clang, CodeSonar, CppChecker, and RoseCheckers.</li>
+          <li>Built an automated Python data pipeline that reduced manual data-handling time by <strong>70%</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skill-group">
+      <div class="skill-label">Languages</div>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Java</span>
+        <span class="tag">C++</span>
+        <span class="tag">C#</span>
+        <span class="tag">Flutter / Dart</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Tools &amp; Frameworks</div>
+      <div class="tags">
+        <span class="tag">React</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">Django</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Docker</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">AWS</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <div class="card">
+        <div class="card-title">Web Music</div>
+        <div class="card-desc">
+          Website and mobile app for building cross-platform playlists by combining songs
+          from YouTube and Spotify into a single unified library.
+        </div>
+        <div class="card-stack">
+          <span class="stack-tag">Flutter</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">YouTube API</span>
+          <span class="stack-tag">Spotify API</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">AWS</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Super Smash Bros Matchups</div>
+        <div class="card-desc">
+          Web app that lets players compare any two Super Smash Bros characters
+          and explore their head-to-head matchup data.
+        </div>
+        <div class="card-stack">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Google Datastore</span>
+          <span class="stack-tag">Netlify</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-degree">Master of Science in Computer Science</div>
+        <div class="edu-school">Iowa State University</div>
+        <div class="edu-date">Jan 2021 – Aug 2024</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">Bachelor of Science in Computer Science</div>
+        <div class="edu-school">Iowa State University</div>
+        <div class="edu-date">Aug 2017 – May 2020</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Saad Ammari &mdash; Woodbury, Minnesota
+  </footer>
+
 </div>
-<div class="slide titlepage">
-  <h1 class="title"><p>CS 474/574 Machine Learning<br />
-HW1</p></h1>
-  <p class="author">
-<p>Saad Ammari<br />
-Iowa State University<br />
-Ames, IA, USA<br />
-</p>
-  </p>
-</div>
-<div id="warm-up" class="slide section level1">
-<h1>Warm up</h1>
-<ul>
-<li>Newton’s first law states that every object will remain at rest or in uniform motion in a straight line unless compelled to change its state by the action of an external force.</li>
-<li><span class="math inline"><em>E</em> = <em>m</em><em>c</em><sup>2</sup></span></li>
-<li><span class="math inline">𝒪(<em>n</em>log <em>n</em>)</span></li>
-</ul>
-</div>
-<div id="section" class="slide section level1">
-<h1></h1>
-<p>The three types of ML are:</p>
-<ul>
-<li>Supervised Learning</li>
-<li>Unsupervised Learning</li>
-<li>Reinforcement Learning</li>
-</ul>
-</div>
-<div id="kiosk-question" class="slide section level1">
-<h1>Kiosk Question</h1>
-<p>You would need a 5-dimension vector at minimum as every type of kiosk will need to be encoded with a binary value. Since there are 5 different types of kiosk, you will need at least 5 dimensions to represent every binary value assigned to every type of kiosk.</p>
-</div>
-<div id="bonus-question" class="slide section level1">
-<h1>Bonus Question</h1>
-<p>URL:</p>
-<ul>
-<li>saadammari.github.io</li>
-</ul>
-</div>
+
 </body>
 </html>
